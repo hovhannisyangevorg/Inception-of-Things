@@ -1,0 +1,53 @@
+Vagrant.configure("2") do |config|
+
+  config.vm.define "gehovhanS" do |master|
+    master.vm.box = "bento/ubuntu-20.04"
+    master.vm.hostname = "gehovhanS"
+    master.vm.box_check_update = true
+    master.vm.network "private_network", ip: "192.168.56.110"
+    master.vm.synced_folder "./.shared", "/vagrant_shared"
+    master.vm.provider "vmware_desktop" do |vmware|
+      vmware.memory = 4096
+      vmware.cpus = 2
+    end
+    master.vm.provision "shell", path: "scripts/net-tools/install_net_tools.sh",
+      env: {
+            "MASTER_IP" => "192.168.56.110",
+            "WORKER_IP" => "192.168.56.111",
+            "TOKEN_FILE_PATH" => "/vagrant_shared/node-token.pub"
+      }
+    master.vm.provision "shell", path: "scripts/k3s/install_k3s_server.sh",
+      env: {
+            "MASTER_IP" => "192.168.56.110",
+            "WORKER_IP" => "192.168.56.111",
+            "TOKEN_FILE_PATH" => "/vagrant_shared/node-token.pub"
+      }
+  end
+
+  config.vm.define "gehovhanSW" do |worker|
+    worker.vm.box = "bento/ubuntu-20.04"
+    worker.vm.hostname = "gehovhanSW"
+    worker.vm.box_check_update = true
+    worker.vm.network "private_network", ip: "192.168.56.111"
+    worker.vm.synced_folder "./.shared", "/vagrant_shared"
+
+    worker.vm.provider "vmware_desktop" do |vmware|
+      vmware.memory = 2048
+      vmware.cpus = 2
+    end
+
+    worker.vm.provision "shell", path: "scripts/net-tools/install_net_tools.sh",
+      env: {
+            "MASTER_IP" => "192.168.56.110",
+            "WORKER_IP" => "192.168.56.111",
+            "TOKEN_FILE_PATH" => "/vagrant_shared/node-token.pub"
+      }
+    worker.vm.provision "shell", path: "scripts/k3s-agent/install_k3s_agent.sh",
+      env: {
+            "MASTER_IP" => "192.168.56.110",
+            "WORKER_IP" => "192.168.56.111",
+            "TOKEN_FILE_PATH" => "/vagrant_shared/node-token.pub"
+      }
+  end
+
+end
