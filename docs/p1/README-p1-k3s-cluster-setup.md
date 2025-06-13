@@ -22,6 +22,8 @@
 - [ VMware Workstation Pro ](https://www.vmware.com/products/desktop-hypervisor/workstation-and-fusion)
 - [ Vagrant ](https://developer.hashicorp.com/vagrant/install)
 - [VMware Desktop Provider](https://developer.hashicorp.com/vagrant/docs/providers/vmware)
-- VMware plugin installed:
+
+#### VMware plugin installed:
   ```bash
   vagrant plugin install vagrant-vmware-desktop
+  ```
