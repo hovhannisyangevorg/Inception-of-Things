@@ -1,6 +1,8 @@
 name: "[ K8s Cluster Management Services ]"
 
 on:
+  pull_request:
+    branches: [ "dev" ]
   workflow_dispatch:
     inputs:
       environment:
