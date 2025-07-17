@@ -1,0 +1,26 @@
+Vagrant.configure("2") do |config|
+
+  config.vm.define "gehovhanS" do |master|
+    master.vm.box = "bento/ubuntu-20.04"
+    master.vm.hostname = "gehovhanS"
+    master.vm.box_check_update = true
+    master.vm.network "private_network", ip: "192.168.80.181"
+    master.vm.provider "vmware_desktop" do |vmware|
+      vmware.memory = 4096
+      vmware.cpus = 2
+    end
+  end
+
+  config.vm.define "gehovhanSW" do |worker|
+    worker.vm.box = "bento/ubuntu-20.04"
+    worker.vm.hostname = "gehovhanSW"
+    worker.vm.box_check_update = true
+    worker.vm.network "private_network", ip: "192.168.80.183"
+
+    worker.vm.provider "vmware_desktop" do |vmware|
+      vmware.memory = 2048
+      vmware.cpus = 2
+    end
+  end
+
+end
