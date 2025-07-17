@@ -1,0 +1,39 @@
+ROOT_DIRECTORY = $(shell git rev-parse --show-toplevel)
+
+DOCKER_HUB_USER = hovhannisyangevorg
+TAG             = latest
+
+APP_ONE_SERVICE_NAME  = app1
+APP_TWO_SERVICE_NAME  = app2
+APP_TREE_SERVICE_NAME = app3
+
+APP_ONE_SERVICE_DIR   = $(ROOT_DIRECTORY)/p2/apps/app1
+APP_TWO_SERVICE_DIR   = $(ROOT_DIRECTORY)/p2/apps/app2
+APP_TREE_SERVICE_DIR  = $(ROOT_DIRECTORY)/p2/apps/app3
+
+APP_ONE_SERVICE_DOCKER_PATH  = $(APP_ONE_SERVICE_DIR)/Dockerfile
+APP_TWO_SERVICE_DOCKER_PATH  = $(APP_TWO_SERVICE_DIR)/Dockerfile
+APP_TREE_SERVICE_DOCKER_PATH = $(APP_TREE_SERVICE_DIR)/Dockerfile
+
+APP_ONE_SERVICE_IMAGE_NAME   = $(DOCKER_HUB_USER)/$(APP_ONE_SERVICE_NAME):$(TAG)
+APP_TWO_SERVICE_IMAGE_NAME   = $(DOCKER_HUB_USER)/$(APP_TWO_SERVICE_NAME):$(TAG)
+APP_TREE_SERVICE_IMAGE_NAME  = $(DOCKER_HUB_USER)/$(APP_TREE_SERVICE_NAME):$(TAG)
+
+
+do: build push
+
+build:
+	@docker build -f $(APP_ONE_SERVICE_DOCKER_PATH) -t $(APP_ONE_SERVICE_IMAGE_NAME) $(APP_ONE_SERVICE_DIR)
+	@docker build -f $(APP_TWO_SERVICE_DOCKER_PATH) -t $(APP_TWO_SERVICE_IMAGE_NAME) $(APP_TWO_SERVICE_DIR)
+	@docker build -f $(APP_TREE_SERVICE_DOCKER_PATH) -t $(APP_TREE_SERVICE_IMAGE_NAME) $(APP_TREE_SERVICE_DIR)
+
+push:
+	@docker push $(APP_ONE_SERVICE_IMAGE_NAME)
+	@docker push $(APP_TWO_SERVICE_IMAGE_NAME)
+	@docker push $(APP_TREE_SERVICE_IMAGE_NAME)
+
+.PHONY: do build push
+
+# hovhannisyangevorg/app1:latest
+# hovhannisyangevorg/app2:latest
+# hovhannisyangevorg/app3:latest
