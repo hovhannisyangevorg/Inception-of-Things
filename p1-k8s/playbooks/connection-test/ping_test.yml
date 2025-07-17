@@ -1,0 +1,8 @@
+- name: Test VM connections
+  hosts:
+    - gehovhan-master
+    - gehovhan-worker
+  gather_facts: no
+  tasks:
+    - name: Ping the VM
+      ansible.builtin.ping:

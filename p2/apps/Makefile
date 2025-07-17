@@ -19,7 +19,6 @@ APP_ONE_SERVICE_IMAGE_NAME   = $(DOCKER_HUB_USER)/$(APP_ONE_SERVICE_NAME):$(TAG)
 APP_TWO_SERVICE_IMAGE_NAME   = $(DOCKER_HUB_USER)/$(APP_TWO_SERVICE_NAME):$(TAG)
 APP_TREE_SERVICE_IMAGE_NAME  = $(DOCKER_HUB_USER)/$(APP_TREE_SERVICE_NAME):$(TAG)
 
-.PHONY: do build push
 
 do: build push
 
@@ -33,6 +32,7 @@ push:
 	@docker push $(APP_TWO_SERVICE_IMAGE_NAME)
 	@docker push $(APP_TREE_SERVICE_IMAGE_NAME)
 
+.PHONY: do build push
 
 # hovhannisyangevorg/app1:latest
 # hovhannisyangevorg/app2:latest

@@ -1,0 +1,3 @@
+- name: Initialize Kubernetes Master
+  hosts: gehovhanS
+  become: yes
