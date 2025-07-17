@@ -1,22 +1,14 @@
-name: Debug Input
+name: Push Workflow
 
 on:
-  workflow_dispatch:
-    inputs:
-      logLevel:
-        description: 'Select log level'
-        required: true
-        default: 'info'
-        type: choice
-        options:
-          - info
-          - warning
-          - debug
+  push:
+    branches:
+      - feature/k8s-cluster-management-services
+    paths:
+      - 'README.md'
 
 jobs:
-  show-input:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Show selected log level
-        run: |
-          echo "Log Level is: ${{ github.event.inputs.logLevel }}"
+      - run: echo "Build triggered by push on main or develop branches affecting src/ or README.md"
