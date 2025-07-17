@@ -1,22 +1,7 @@
 name: "[ K8s Cluster Management Services ]"
 
 on:
-  pull_request:
-    branches: [ "dev" ]
   workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Environment to deploy to'
-        required: true
-        default: 'staging'
-      version:
-        description: 'Version or tag to deploy'
-        required: true
-        default: 'latest'
-      restart_services:
-        description: 'Restart services after deploy?'
-        required: false
-        default: 'true'
 
 jobs:
   deploy:
