@@ -2,26 +2,34 @@ name: "[ K8s Cluster Management Services ]"
 
 on:
   workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+          - info
+          - warning
+          - debug
+      tags:
+        description: 'Test scenario tags'
+        required: false
+        type: boolean
+      environment:
+        description: 'Environment to run tests against'
+        type: environment
+        required: true
 
 jobs:
-  deploy:
+  log-the-inputs:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Show input values
-        run: |
-          echo "Target environment: ${{ github.event.inputs.environment }}"
-          echo "Deploy version: ${{ github.event.inputs.version }}"
-          echo "Restart services: ${{ github.event.inputs.restart_services }}"
-
-      - name: Fake deploy command (for demo)
-        run: |
-          echo "Deploying version ${{ github.event.inputs.version }} to ${{ github.event.inputs.environment }}"
-          if [ "${{ github.event.inputs.restart_services }}" == "true" ]; then
-            echo "Restarting services..."
-          else
-            echo "Skipping service restart"
-          fi
+      - run: |
+          echo "Log level: $LEVEL"
+          echo "Tags: $TAGS"
+          echo "Environment: $ENVIRONMENT"
+        env:
+          LEVEL: ${{ inputs.logLevel }}
+          TAGS: ${{ inputs.tags }}
+          ENVIRONMENT: ${{ inputs.environment }}
