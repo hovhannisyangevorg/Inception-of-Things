@@ -1,35 +1,26 @@
-name: "[ K8s Cluster Management Services ]"
+name: Mixed inputs
 
 on:
   workflow_dispatch:
     inputs:
-      logLevel:
-        description: 'Log level'
-#        required: true
-#        default: 'warning'
-#        type: choice
-#        options:
-#          - info
-#          - warning
-#          - debug
-#      tags:
-#        description: 'Test scenario tags'
-#        required: false
-#        type: boolean
-#      environment:
-#        description: 'Environment to run tests against'
-#        type: environment
-#        required: true
+      name:
+        type: choice
+        description: Who to greet
+        options:
+          - monalisa
+          - cschleiden
+      message:
+        required: true
+      use-emoji:
+        type: boolean
+        description: Include 🎉🤣 emojis
+      environment:
+        type: environment
 
 jobs:
-  log-the-inputs:
+  greet:
     runs-on: ubuntu-latest
+
     steps:
-      - run: |
-          echo "Log level: $LEVEL"
-          echo "Tags: $TAGS"
-          echo "Environment: $ENVIRONMENT"
-        env:
-          LEVEL: ${{ inputs.logLevel }}
-          TAGS: ${{ inputs.tags }}
-          ENVIRONMENT: ${{ inputs.environment }}
+      - name: Send greeting
+        run: echo "${{ github.event.inputs.message }} ${{ fromJSON('["", "🥳"]')[github.event.inputs.use-emoji == 'true'] }} ${{ github.event.inputs.name }}"
