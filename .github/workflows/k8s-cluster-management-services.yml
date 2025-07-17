@@ -1,0 +1,40 @@
+name: "[ K8s Cluster Management Services ]"
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'staging'
+      version:
+        description: 'Version or tag to deploy'
+        required: true
+        default: 'latest'
+      restart_services:
+        description: 'Restart services after deploy?'
+        required: false
+        default: 'true'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Show input values
+        run: |
+          echo "Target environment: ${{ github.event.inputs.environment }}"
+          echo "Deploy version: ${{ github.event.inputs.version }}"
+          echo "Restart services: ${{ github.event.inputs.restart_services }}"
+
+      - name: Fake deploy command (for demo)
+        run: |
+          echo "Deploying version ${{ github.event.inputs.version }} to ${{ github.event.inputs.environment }}"
+          if [ "${{ github.event.inputs.restart_services }}" == "true" ]; then
+            echo "Restarting services..."
+          else
+            echo "Skipping service restart"
+          fi
