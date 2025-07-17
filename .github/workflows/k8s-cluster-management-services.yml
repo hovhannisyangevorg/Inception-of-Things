@@ -1,26 +1,21 @@
-name: Mixed inputs
+name: Debug Input
 
 on:
   workflow_dispatch:
     inputs:
-      name:
-        type: choice
-        description: Who to greet
-        options:
-          - monalisa
-          - cschleiden
-      message:
+      logLevel:
+        description: 'Select log level'
         required: true
-      use-emoji:
-        type: boolean
-        description: Include 🎉🤣 emojis
-      environment:
-        type: environment
+        default: 'info'
+        type: choice
+        options:
+          - info
+          - warning
+          - debug
 
 jobs:
-  greet:
+  show-input:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Send greeting
-        run: echo "${{ github.event.inputs.message }} ${{ fromJSON('["", "🥳"]')[github.event.inputs.use-emoji == 'true'] }} ${{ github.event.inputs.name }}"
+      - name: Show selected log level
+        run: echo "Log Level is: ${{ github.event.inputs.logLevel }}"
