@@ -18,4 +18,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Show selected log level
-        run: echo "Log Level is: ${{ github.event.inputs.logLevel }}"
+        run: |
+          echo "Log Level is: ${{ github.event.inputs.logLevel }}"
