@@ -1,16 +1,1 @@
-name: Push Workflow
-
-on:
-  push:
-    branches:
-      - feature/k8s-cluster-management-services
-    paths:
-      - 'README.md'
-
-
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Build triggered by push on main or develop branches affecting src/ or README.md"
+Squash
